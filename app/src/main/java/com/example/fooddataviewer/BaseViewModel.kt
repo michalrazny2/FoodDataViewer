@@ -30,7 +30,7 @@ abstract class MobiusVM<M, E, F>(
 
     init{
         var builder = RxMobius.loop(update, effectHandler)
-            .eventRunner(Producer{SchedulerWorkRunner(AndroidSchedulers.mainThread())}) //todo: do zmiany z rx3 na 2 (chyba)
+            .eventRunner(Producer{SchedulerWorkRunner(AndroidSchedulers.mainThread())})
             .effectRunner ( Producer{SchedulerWorkRunner(AndroidSchedulers.mainThread())})
             .logger(AndroidLogger(tag))
         if(eventSources.isNotEmpty()){
@@ -38,6 +38,7 @@ abstract class MobiusVM<M, E, F>(
         }
         loop = builder.startFrom(initialModel)
     }
+
     final override fun init(event: E): BaseViewModel<M, E>{
         if(!initialized.getAndSet(true)){
             loop.dispatchEvent(event)
