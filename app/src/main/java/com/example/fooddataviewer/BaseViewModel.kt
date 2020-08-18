@@ -11,7 +11,7 @@ import com.spotify.mobius.rx2.SchedulerWorkRunner
 import io.reactivex.Observable
 import io.reactivex.ObservableSource
 import io.reactivex.ObservableTransformer
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.android.schedulers.AndroidSchedulers
 import java.util.concurrent.atomic.AtomicBoolean
 
 interface BaseViewModel<M, E>: ObservableTransformer<E, M>{
@@ -29,9 +29,9 @@ abstract class MobiusVM<M, E, F>(
     private val initialized = AtomicBoolean(false)
 
     init{
-        val builder = RxMobius.loop(update, effectHandler)
+        var builder = RxMobius.loop(update, effectHandler)
             .eventRunner(Producer{SchedulerWorkRunner(AndroidSchedulers.mainThread())}) //todo: do zmiany z rx3 na 2 (chyba)
-            .effectRunner { Producer{SchedulerWorkRunner(AndroidSchedulers.mainThread()}) }
+            .effectRunner ( Producer{SchedulerWorkRunner(AndroidSchedulers.mainThread())})
             .logger(AndroidLogger(tag))
         if(eventSources.isNotEmpty()){
             builder = builder.eventSource(RxEventSources.fromObservables(*eventSources))
@@ -46,7 +46,7 @@ abstract class MobiusVM<M, E, F>(
     }
 
     final override fun apply(upstream: Observable<E>): ObservableSource<M> {
-        Observable.create{emmiter ->
+        return Observable.create{emmiter ->
             val eventDisposable = upstream.subscribe{ event -> loop.dispatchEvent(event) }
             val modelDisposable = loop.observe{model -> emmiter.onNext(model)}
             emmiter.setCancellable {
