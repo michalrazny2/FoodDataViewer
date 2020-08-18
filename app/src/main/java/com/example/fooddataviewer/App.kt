@@ -6,7 +6,7 @@ import kotlinx.android.synthetic.*
 class App : Application() {
 
     val component by lazy{
-//        DaggerApplicationComponent.builder().
+//        ApplicationComponent.builder().
 //                build()
     }
 

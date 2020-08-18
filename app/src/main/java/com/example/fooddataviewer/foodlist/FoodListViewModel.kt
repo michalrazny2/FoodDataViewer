@@ -19,5 +19,4 @@ class FoodListViewModel @Inject constructor(): MobiusVM<FoodListModel,FoodListEv
     FoodListModel,
     RxMobius.subtypeEffectHandler<FoodListEfect, FoodListEvent>()
         .build()
-    ) {
-}
+    )

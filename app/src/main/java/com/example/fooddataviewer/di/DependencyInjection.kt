@@ -3,10 +3,7 @@ package com.example.fooddataviewer.di
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.fooddataviewer.foodlist.FoodListViewModel
-import dagger.Binds
-import dagger.Component
-import dagger.Module
-import dagger.Provides
+import dagger.*
 import dagger.multibindings.IntoMap
 import javax.inject.Provider
 import javax.inject.Singleton
@@ -17,7 +14,8 @@ import kotlin.reflect.KClass
 @Retention(AnnotationRetention.RUNTIME)
 internal annotation class  ViewModelKey(val value: KClass<out ViewModel>)
 
-@Component(modules = [ApplicationModule::class, ViewModelModule::class])
+
+@Component(modules = [ApplicationModule::class, ViewModelModule::class])  //todo: tutaj cos nie gra
 interface ApplicationComponent{
     fun viewModelFactory(): ViewModelProvider.Factory
 }
@@ -37,6 +35,7 @@ object ApplicationModule{
 
 @Module
 abstract class ViewModelModule{
+
     @Binds
     @IntoMap
     @ViewModelKey(FoodListViewModel::class)
