@@ -14,6 +14,10 @@ import kotlin.reflect.KClass
 
 class App : Application() {
 
+    // Events for UI actions or effect results
+    // Model for our view state
+    // Effects for operations that may take long time OR for impure code
+
     val component by lazy{
         DaggerApplicationComponent
             .builder()

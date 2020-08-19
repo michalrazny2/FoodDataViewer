@@ -52,9 +52,9 @@ dependencies {
     implementation "com.jakewharton.rxbinding3:rxbinding:3.0.0"
 
     //mobius
-    implementation "com.spotify.mobius:mobius-core:1.0.0"
-    implementation "com.spotify.mobius:mobius-rx2:1.0.0"
-    implementation "com.spotify.mobius:mobius-android:1.0.0"
+    implementation "com.spotify.mobius:mobius-core:1.5.2"
+    implementation "com.spotify.mobius:mobius-rx2:1.5.2"
+    implementation "com.spotify.mobius:mobius-android:1.5.2"
 
     //dagger2
     implementation "com.google.dagger:dagger:2.13"

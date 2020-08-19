@@ -1,6 +1,5 @@
 package com.example.fooddataviewer.foodlist
 
-import androidx.navigation.Navigator
 import com.example.fooddataviewer.MobiusVM
 import com.spotify.mobius.Next
 import com.spotify.mobius.Update
@@ -10,18 +9,21 @@ import javax.inject.Inject
 fun foodListUpdate(
     model: FoodListModel,
     event: FoodListEvent
-): Next<FoodListModel, FoodListEfect> {
+): Next<FoodListModel, FoodListEffect> {
     return when(event){
         AddButtonClicked -> Next.dispatch(setOf(NavigateToScanner))
 
     }
 }
 
-class FoodListViewModel @Inject constructor(navigator: com.example.fooddataviewer.utils.Navigator): MobiusVM<FoodListModel,FoodListEvent,FoodListEfect>(
+class FoodListViewModel @Inject constructor(
+    navigator: com.example.fooddataviewer.utils.Navigator
+):
+    MobiusVM<FoodListModel,FoodListEvent,FoodListEffect>(
     "FoodListViewModel",
     Update(::foodListUpdate),
     FoodListModel,
-    RxMobius.subtypeEffectHandler<FoodListEfect, FoodListEvent>()
+    RxMobius.subtypeEffectHandler<FoodListEffect, FoodListEvent>()
         .addAction(NavigateToScanner::class.java){
             navigator.to(FoodListFragmentDirections.scan())
         }
