@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:startDestination="@id/foodListFragment"
+    android:id="@+id/navigation">
+
+    <fragment
+        android:id="@+id/foodListFragment"
+        android:name="com.example.fooddataviewer.foodlist.FoodListFragment">
+
+        <action
+            android:id="@+id/scan"
+            app:destination="@id/scanFragment"
+            />
+    </fragment>
+
+    <fragment
+        android:id="@+id/scanFragment"
+        android:name="com.example.fooddataviewer.scan.ScanFragment" />
+
+</navigation>

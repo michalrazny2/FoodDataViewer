@@ -1,3 +1,5 @@
 package com.example.fooddataviewer.foodlist
 
-object FoodListEvent
+sealed class FoodListEvent
+
+object AddButtonClicked : FoodListEvent()

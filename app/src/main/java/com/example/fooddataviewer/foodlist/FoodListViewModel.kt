@@ -10,7 +10,10 @@ fun foodListUpdate(
     model: FoodListModel,
     event: FoodListEvent
 ): Next<FoodListModel, FoodListEfect> {
-    return Next.next(FoodListModel)
+    return when(event){
+        AddButtonClicked -> Next.dispatch(setOf(NavigateToScanner))
+
+    }
 }
 
 class FoodListViewModel @Inject constructor(): MobiusVM<FoodListModel,FoodListEvent,FoodListEfect>(
@@ -18,5 +21,8 @@ class FoodListViewModel @Inject constructor(): MobiusVM<FoodListModel,FoodListEv
     Update(::foodListUpdate),
     FoodListModel,
     RxMobius.subtypeEffectHandler<FoodListEfect, FoodListEvent>()
+        .addAction(NavigateToScanner::class.java){
+
+        }
         .build()
     )

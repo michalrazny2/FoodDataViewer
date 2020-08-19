@@ -48,8 +48,8 @@ dependencies {
 
     //rxJava2
     implementation "io.reactivex.rxjava2:rxjava:2.2.19"
-    implementation "io.reactivex.rxjava2:rxandroid:2.0.1"
-    implementation "com.jakewharton.rxbinding4:rxbinding:4.0.0"
+    implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
+    implementation "com.jakewharton.rxbinding3:rxbinding:3.0.0"
 
     //mobius
     implementation "com.spotify.mobius:mobius-core:1.0.0"
@@ -60,6 +60,9 @@ dependencies {
     implementation "com.google.dagger:dagger:2.13"
     kapt "com.google.dagger:dagger-compiler:2.13"
     //kapt 'com.google.dagger:dagger-android-processor:2.13'
+
+    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'

@@ -1,3 +1,5 @@
 package com.example.fooddataviewer.foodlist
 
-object FoodListEfect
+sealed class FoodListEfect
+
+object NavigateToScanner: FoodListEfect()
