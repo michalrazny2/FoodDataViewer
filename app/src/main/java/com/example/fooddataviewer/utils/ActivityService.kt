@@ -12,4 +12,10 @@ class ActivityService {
     fun onCreate(activity: Activity){
         this._activity = activity
     }
+
+    fun onDestroy(activity: Activity){
+        if(this._activity == activity){
+            this._activity = null
+        }
+    }
 }
