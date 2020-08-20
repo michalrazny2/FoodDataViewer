@@ -1,15 +1,29 @@
 package com.example.fooddataviewer.scan.handlers
 
-import com.example.fooddataviewer.scan.ProcessBarcode
-import com.example.fooddataviewer.scan.ScanEffect
+import android.util.Log
+import com.example.fooddataviewer.model.ProductRepository
+import com.example.fooddataviewer.model.mapProduct
+import com.example.fooddataviewer.scan.*
+import com.google.android.gms.vision.barcode.Barcode
 import io.reactivex.Observable
 import io.reactivex.ObservableSource
 import io.reactivex.ObservableTransformer
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class ProcessBarcodeHandler @Inject constructor():
-    ObservableTransformer<ProcessBarcode, ScanEffect>{
-    override fun apply(upstream: Observable<ProcessBarcode>): ObservableSource<ScanEffect> {
-        TODO("Not yet implemented")
+class ProcessBarcodeHandler @Inject constructor(private val productRepository: ProductRepository):
+    ObservableTransformer<ProcessBarcode, ScanEvent>{
+
+    override fun apply(upstream: Observable<ProcessBarcode>): ObservableSource<ScanEvent> { //todo tutaj dosc na slepo zmienione ze ScanEffect
+        return upstream.switchMap { effect ->
+            productRepository.getProductFromApi(effect.barcode).map {
+                product -> ProductLoaded(product) as ScanEvent
+            }.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnError { error -> Log.e("ProcessBarcode", error.message, error) }
+                .onErrorReturn { BarcodeError }
+                .toObservable()
+        }
     }
 }

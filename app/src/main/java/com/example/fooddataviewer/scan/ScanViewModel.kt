@@ -1,8 +1,10 @@
 package com.example.fooddataviewer.scan
 
 import com.example.fooddataviewer.MobiusVM
+import com.example.fooddataviewer.scan.handlers.ProcessBarcodeHandler
 import com.example.fooddataviewer.scan.handlers.ProcessCameraFrameHandler
 import com.spotify.mobius.Next
+import com.spotify.mobius.Next.next
 import com.spotify.mobius.Next.noChange
 import com.spotify.mobius.Update
 import com.spotify.mobius.rx2.RxMobius
@@ -17,20 +19,32 @@ fun scanUpdate(
         is Detected -> if(!model.activity){ //if for checking if api call is happening right now
             Next.next<ScanModel, ScanEffect>(model.copy(activity = true),
             setOf(ProcessBarcode(event.barcode)))
+
         }else{
             noChange<ScanModel, ScanEffect>()
         }
+        // model.copy is in fact the feature of MVI model, we dont change model itself
+        is ProductLoaded -> next(
+            model.copy(activity = false,
+            processBarcodeResult = ProcessBarcodeResult.ProductLoaded(event.product))
+        )
+        is BarcodeError -> next(
+            model.copy(activity = false,
+            processBarcodeResult = ProcessBarcodeResult.Error)
+        )
     }
 }
 
 class ScanViewModel @Inject constructor(
-    processCameraFrameHandler: ProcessCameraFrameHandler
+    processCameraFrameHandler: ProcessCameraFrameHandler,
+    processBarcodeHandler: ProcessBarcodeHandler
 ):
     MobiusVM<ScanModel, ScanEvent, ScanEffect>(
         "ScanViewModel",
         Update(::scanUpdate),
-        ScanModel(activity = true),  // todo to inaczej niz u typeczka, robil to w 42/44 czesci chyba
+        ScanModel(),  // todo to inaczej niz u typeczka, robil to w 42/44 czesci chyba
         RxMobius.subtypeEffectHandler<ScanEffect, ScanEvent>()
             .addTransformer(ProcessCameraFrame::class.java, processCameraFrameHandler)
+            .addTransformer(ProcessBarcode::class.java, processBarcodeHandler)
             .build()
     )

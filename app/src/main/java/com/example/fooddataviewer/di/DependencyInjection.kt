@@ -34,7 +34,7 @@ internal annotation class  ViewModelKey(val value: KClass<out ViewModel>)
 internal annotation class ApiBaseUrl
 
 @Singleton
-@Component(modules = [ApplicationModule::class, ViewModelModule::class])  //todo: tutaj cos nie gra
+@Component(modules = [ApplicationModule::class, ViewModelModule::class, ApiModule::class])  //todo: tutaj cos nie gra
 interface ApplicationComponent{
     fun viewModelFactory(): ViewModelProvider.Factory
 

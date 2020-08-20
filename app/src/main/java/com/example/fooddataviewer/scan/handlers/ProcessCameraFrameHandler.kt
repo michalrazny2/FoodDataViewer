@@ -29,7 +29,8 @@ class ProcessCameraFrameHandler @Inject constructor(): ObservableTransformer<Pro
                     .setFormat(FirebaseVisionImageMetadata.IMAGE_FORMAT_NV21)
                     .build()
                 val image = FirebaseVisionImage.fromByteArray(effect.frame.image,metadata)
-                val detector = FirebaseVision.getInstance().visionBarcodeDetector
+                val detector = FirebaseVision.getInstance()
+                    .getVisionBarcodeDetector(options)
                 // if image detected we go for Detected() event
                 detector.detectInImage(image).addOnSuccessListener { barcodes->
                     if(barcodes.isNotEmpty()){
