@@ -21,6 +21,7 @@ class App : Application() {
     val component by lazy{
         DaggerApplicationComponent
             .builder()
+            .context(this)
             .build()
     }
 }

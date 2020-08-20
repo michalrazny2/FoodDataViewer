@@ -39,6 +39,15 @@ interface ApplicationComponent{
     fun viewModelFactory(): ViewModelProvider.Factory
 
     fun activityService(): ActivityService
+
+    @Component.Builder
+    interface Builder{
+
+        @BindsInstance
+        fun context(context: Context):Builder
+
+        fun build(): ApplicationComponent
+    }
 }
 
 @Module
@@ -102,8 +111,9 @@ object ApiModule{
     @Provides
     @Singleton
     @JvmStatic
-    fun retrofit(okHttpClient: OkHttpClient): Retrofit {
+    fun retrofit(@ApiBaseUrl apiBaseUrl: String, okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
+            .baseUrl(apiBaseUrl)
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(MoshiConverterFactory.create())
             .client(okHttpClient)
