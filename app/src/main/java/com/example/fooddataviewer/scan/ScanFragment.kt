@@ -76,7 +76,7 @@ class ScanFragment : Fragment(R.layout.scan_fragment) {
                 rotation = getRotationCompensation(
                     cameraId,
                     this.activity as Activity,
-                    this.requireContext() //todo inaczej niz u niego
+                    this.context!! //todo inaczej niz u niego, update: teraz tak samo
                 )
             ))
         },
