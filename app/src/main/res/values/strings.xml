@@ -9,5 +9,12 @@
     <string name="scan_energy">Energy:</string>
     <string name="scan_energy_value">%1$d kcal</string>
     <string name="scan_macro_value">%1$d.1fg</string>
+    <string name="productNameView_string">Rainbow</string>
+    <string name="brandNameView_string">Menthos</string>
+    <string name="carbsValueView_string">100.0g</string>
+    <string name="fatValueView_string">100.0g</string>
+    <string name="proteinValueView_string">100.0g</string>
+    <string name="energyValueView_string">100 kcal</string>
+    <string name="contentdesc">contentDesc</string>
 
 </resources>

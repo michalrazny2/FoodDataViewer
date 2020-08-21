@@ -2,7 +2,8 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <io.fotoapparat.view.CameraView
         android:id="@+id/cameraView"
@@ -32,14 +33,15 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_error_outline"
+            app:drawableStartCompat="@drawable/ic_error_outline"
             android:drawablePadding="8dp"
-            android:drawableTint="?attr/colorError"
+            app:drawableTint="?attr/colorError"
             android:text="@string/scan_error"
             android:textAppearance="?attr/textAppearanceSubtitle1"
             android:textColor="?attr/colorError" />
 
     </FrameLayout>
+
 
     <include
         android:id="@+id/productView"

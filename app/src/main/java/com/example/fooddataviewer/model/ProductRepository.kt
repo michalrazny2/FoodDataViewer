@@ -26,7 +26,7 @@ fun mapProduct(dto: ProductDto, saved: Boolean): Product{
         imageUrl = dto.image_url,
         ingridients = dto.ingridients_text_debug,
         saved = saved,
-        nutriments = mapNutriments(dto.nutriments)
+        nutriments = mapNutriments(dto.nutriments)!!
     )
 }
 

@@ -7,7 +7,7 @@
     android:id="@+id/container"
     tools:context=".Activity">
 
-    <fragment
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/navigationHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

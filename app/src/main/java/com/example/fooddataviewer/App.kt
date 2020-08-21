@@ -5,11 +5,9 @@ import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import com.example.fooddataviewer.di.ApplicationComponent
 import com.example.fooddataviewer.di.DaggerApplicationComponent
-import kotlinx.android.synthetic.*
+import com.example.fooddataviewer.di.ApplicationComponent
 import kotlin.reflect.KClass
 
 class App : Application() {

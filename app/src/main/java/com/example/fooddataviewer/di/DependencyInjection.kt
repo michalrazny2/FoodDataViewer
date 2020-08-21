@@ -11,7 +11,6 @@ import com.example.fooddataviewer.utils.ActivityService
 import com.example.fooddataviewer.utils.Navigator
 import dagger.*
 import dagger.multibindings.IntoMap
-import kotlinx.android.synthetic.main.activity.*
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -26,40 +25,40 @@ import kotlin.reflect.KClass
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.RUNTIME)
 @MapKey
-internal annotation class  ViewModelKey(val value: KClass<out ViewModel>)
+internal annotation class ViewModelKey(val value: KClass<out ViewModel>)
 
 @MustBeDocumented
-@Qualifier //??
+@Qualifier
 @Retention(AnnotationRetention.RUNTIME)
 internal annotation class ApiBaseUrl
 
 @Singleton
-@Component(modules = [ApplicationModule::class, ViewModelModule::class, ApiModule::class])  //todo: tutaj cos nie gra
-interface ApplicationComponent{
+@Component(modules = [ApplicationModule::class, ViewModelModule::class, ApiModule::class])
+interface ApplicationComponent {
+
     fun viewModelFactory(): ViewModelProvider.Factory
 
     fun activityService(): ActivityService
 
     @Component.Builder
-    interface Builder{
+    interface Builder {
 
         @BindsInstance
-        fun context(context: Context):Builder
+        fun context(context: Context): Builder
 
         fun build(): ApplicationComponent
     }
 }
 
 @Module
-object ApplicationModule{
+object ApplicationModule {
 
-    @Provides  //TODO: tutaj pod @Provides byl @Singleton, wywalilem i zaczelo dzialac!
+    @Provides
     @Singleton
     @JvmStatic
-    fun viewModel(providers: MutableMap<Class<out ViewModel>, Provider<ViewModel>>):ViewModelProvider.Factory{
-        //the function will give us some factoryrr
-        //we can ask for any module and provider will give it to us
-        return ViewModelFactory(providers)
+    fun viewModels(viewModels: MutableMap<Class<out ViewModel>, Provider<ViewModel>>):
+            ViewModelProvider.Factory {
+        return ViewModelFactory(viewModels)
     }
 
     @Provides
@@ -70,23 +69,23 @@ object ApplicationModule{
     @Provides
     @Singleton
     @JvmStatic
-    fun navigator(activityService: ActivityService): Navigator{
+    fun navigator(activityService: ActivityService): Navigator {
         return Navigator(R.id.navigationHostFragment, activityService)
     }
 
     @Provides
-    @Singleton
+    @ApiBaseUrl
     @JvmStatic
     fun apiBaseUrl(context: Context): String = context.getString(R.string.api_base_url)
 }
 
 @Module
-abstract class ViewModelModule{
+abstract class ViewModelModule {
 
     @Binds
     @IntoMap
     @ViewModelKey(FoodListViewModel::class)
-    abstract fun foodListViewModel(viewModel:FoodListViewModel): ViewModel
+    abstract fun foodListViewModel(viewModel: FoodListViewModel): ViewModel
 
     @Binds
     @IntoMap
@@ -96,15 +95,14 @@ abstract class ViewModelModule{
 }
 
 @Module
-object ApiModule{
+object ApiModule {
 
     @Provides
     @Singleton
     @JvmStatic
-    fun okHttpClient():OkHttpClient{
+    fun okHttpClient(): OkHttpClient {
         return OkHttpClient.Builder()
-            .addInterceptor(HttpLoggingInterceptor()
-                .setLevel(HttpLoggingInterceptor.Level.BODY))
+            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .build()
     }
 
@@ -123,7 +121,7 @@ object ApiModule{
     @Provides
     @Singleton
     @JvmStatic
-    fun productService(retrofit:Retrofit): ProductService{
+    fun productService(retrofit: Retrofit): ProductService {
         return retrofit.create(ProductService::class.java)
     }
 }

@@ -82,15 +82,15 @@ class ScanFragment : Fragment(R.layout.scan_fragment) {
             .subscribe{
                 // setting properties after scanning barcode
                 model -> loadingIndicator.isVisible = model.activity
-                productView.isVisible = model.processBarcodeResult is ProcessBarcodeResult.ProductLoaded
+                //productView.isVisible = model.processBarcodeResult is ProcessBarcodeResult.ProductLoaded
                 errorView.isVisible = model.processBarcodeResult is ProcessBarcodeResult.Error
                 if(model.processBarcodeResult is ProcessBarcodeResult.ProductLoaded){
                     productNameView.text = model.processBarcodeResult.product.name
                     brandNameView.text = model.processBarcodeResult.product.brands
-                    energyValueView.text = getString(
-                        R.string.scan_energy_value,
-                        model.processBarcodeResult.product.nutriments?.energy
-                    )
+//                    energyValueView.text = getString(
+//                        R.string.scan_energy_value,
+//                        model.processBarcodeResult.product.nutriments?.energy
+//                    )
                     carbsValueView.text = getString(
                         R.string.scan_macro_value,
                         model.processBarcodeResult.product.nutriments?.carbohydrates
