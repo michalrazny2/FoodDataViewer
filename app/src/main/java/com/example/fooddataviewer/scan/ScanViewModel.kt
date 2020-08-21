@@ -3,9 +3,9 @@ package com.example.fooddataviewer.scan
 import com.example.fooddataviewer.MobiusVM
 import com.example.fooddataviewer.scan.handlers.ProcessBarcodeHandler
 import com.example.fooddataviewer.scan.handlers.ProcessCameraFrameHandler
+import com.example.fooddataviewer.utils.Navigator
 import com.spotify.mobius.Next
-import com.spotify.mobius.Next.next
-import com.spotify.mobius.Next.noChange
+import com.spotify.mobius.Next.*
 import com.spotify.mobius.Update
 import com.spotify.mobius.rx2.RxMobius
 import javax.inject.Inject
@@ -17,7 +17,7 @@ fun scanUpdate(
     return when(event){
         is Captured -> Next.dispatch(setOf(ProcessCameraFrame(event.frame)))
         is Detected -> if(!model.activity){ //if for checking if api call is happening right now
-            Next.next<ScanModel, ScanEffect>(model.copy(activity = true),
+            next<ScanModel, ScanEffect>(model.copy(activity = true),
             setOf(ProcessBarcode(event.barcode)))
 
         }else{
@@ -32,12 +32,20 @@ fun scanUpdate(
             model.copy(activity = false,
             processBarcodeResult = ProcessBarcodeResult.Error)
         )
+        ProductInfoClicked -> if(model.processBarcodeResult is ProcessBarcodeResult.ProductLoaded){
+            dispatch<ScanModel, ScanEffect>(
+                setOf(NavigateToFoodDetails(model.processBarcodeResult.product.id))
+            )
+        }else{
+            noChange<ScanModel, ScanEffect>()
+        }
     }
 }
 
 class ScanViewModel @Inject constructor(
     processCameraFrameHandler: ProcessCameraFrameHandler,
-    processBarcodeHandler: ProcessBarcodeHandler
+    processBarcodeHandler: ProcessBarcodeHandler,
+    navigator: Navigator
 ):
     MobiusVM<ScanModel, ScanEvent, ScanEffect>(
         "ScanViewModel",
@@ -46,5 +54,8 @@ class ScanViewModel @Inject constructor(
         RxMobius.subtypeEffectHandler<ScanEffect, ScanEvent>()
             .addTransformer(ProcessCameraFrame::class.java, processCameraFrameHandler)
             .addTransformer(ProcessBarcode::class.java, processBarcodeHandler)
+            .addConsumer(NavigateToFoodDetails::class.java){
+                effect -> navigator.to(ScanFragmentDirections.foodDetails(effect.barcode))
+            }
             .build()
     )

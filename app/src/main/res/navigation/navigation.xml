@@ -17,6 +17,20 @@
 
     <fragment
         android:id="@+id/scanFragment"
-        android:name="com.example.fooddataviewer.scan.ScanFragment" />
+        android:name="com.example.fooddataviewer.scan.ScanFragment" >
+
+        <action
+            android:id="@+id/foodDetails"
+            app:destination="@+id/foodDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/foodDetailsFragment"
+        android:name="com.example.fooddataviewer.fooddetails.FoodDetailsFragment" >
+
+        <argument
+            android:name="barcode"
+            app:argType="string" />
+    </fragment>
 
 </navigation>

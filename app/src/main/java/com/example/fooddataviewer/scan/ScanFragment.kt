@@ -19,9 +19,11 @@ import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.example.fooddataviewer.R
 import com.example.fooddataviewer.getViewModel
 import com.google.firebase.ml.vision.common.FirebaseVisionImageMetadata
+import com.jakewharton.rxbinding3.view.clicks
 import io.fotoapparat.Fotoapparat
 import io.fotoapparat.configuration.CameraConfiguration
 import io.fotoapparat.preview.Frame
@@ -65,7 +67,7 @@ class ScanFragment : Fragment(R.layout.scan_fragment) {
         // wykorzystujemy swoja funkcje do znalezienia kamery
         val cameraId = findRearFacingCameraId()
 
-        disposable = Observable.create(frameProcessor)
+        disposable = Observable.mergeArray(Observable.create(frameProcessor)
             .map{ frame->
             Captured(
                 frame.copy(
@@ -77,7 +79,9 @@ class ScanFragment : Fragment(R.layout.scan_fragment) {
                     this.requireContext() //todo inaczej niz u niego
                 )
             ))
-        }
+        },
+            productView.clicks().map{ProductInfoClicked}
+        )
             .compose(getViewModel(ScanViewModel::class))
             .subscribe{
                 // setting properties after scanning barcode
@@ -103,6 +107,11 @@ class ScanFragment : Fragment(R.layout.scan_fragment) {
                         R.string.scan_macro_value,
                         model.processBarcodeResult.product.nutriments.proteins
                     )
+
+                    Glide.with(requireContext())
+                        .load(model.processBarcodeResult.product.imageUrl)
+                        .fitCenter()
+                        .into(productImageView)
                 }
             }
     }
