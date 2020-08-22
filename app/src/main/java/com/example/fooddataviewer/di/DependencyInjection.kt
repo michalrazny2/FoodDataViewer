@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.fooddataviewer.R
+import com.example.fooddataviewer.fooddetails.FoodDetailsViewModel
 import com.example.fooddataviewer.foodlist.FoodListViewModel
 import com.example.fooddataviewer.model.ProductService
 import com.example.fooddataviewer.scan.ScanViewModel
@@ -91,6 +92,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(ScanViewModel::class)
     abstract fun scanViewModel(viewModel: ScanViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(FoodDetailsViewModel::class)
+    abstract fun foodDetailsViewModel(viewModel: FoodDetailsViewModel): ViewModel
 
 }
 
