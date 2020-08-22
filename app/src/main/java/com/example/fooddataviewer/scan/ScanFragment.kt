@@ -105,7 +105,7 @@ class ScanFragment : Fragment(R.layout.scan_fragment) {
                     )
                     proteinValueView.text = getString(
                         R.string.scan_macro_value,
-                        model.processBarcodeResult.product.nutriments.proteins
+                        model.processBarcodeResult.product.nutriments?.proteins
                     )
 
                     Glide.with(requireContext())

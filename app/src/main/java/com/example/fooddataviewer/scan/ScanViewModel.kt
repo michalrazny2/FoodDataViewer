@@ -32,7 +32,7 @@ fun scanUpdate(
             model.copy(activity = false,
             processBarcodeResult = ProcessBarcodeResult.Error)
         )
-        ProductInfoClicked -> if(model.processBarcodeResult is ProcessBarcodeResult.ProductLoaded){
+        is ProductInfoClicked -> if(model.processBarcodeResult is ProcessBarcodeResult.ProductLoaded){
             dispatch<ScanModel, ScanEffect>(
                 setOf(NavigateToFoodDetails(model.processBarcodeResult.product.id))
             )

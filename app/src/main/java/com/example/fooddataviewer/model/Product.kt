@@ -7,5 +7,5 @@ data class Product(
     val brands: String,
     val imageUrl: String,
     val ingridients: String?,
-    val nutriments: Nutriments
+    val nutriments: Nutriments?
 )
