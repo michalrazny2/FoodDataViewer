@@ -16,5 +16,11 @@
     <string name="proteinValueView_string">100.0g</string>
     <string name="energyValueView_string">100 kcal</string>
     <string name="contentdesc">contentDesc</string>
+    <string name="food_details_protein">food details protein</string>
+    <string name="food_details_fat">food details fat</string>
+    <string name="food_details_carbs">food details carbs</string>
+    <string name="food_details_energy">food details energy</string>
+    <string name="food_details_save">food details save</string>
+    <string name="taste_the_rainbow_with_skittles">Taste the rainbow with Skittles</string>
 
 </resources>
