@@ -1,5 +1,6 @@
 package com.example.fooddataviewer.fooddetails
 
+import android.app.Notification
 import androidx.lifecycle.ViewModel
 import com.example.fooddataviewer.BaseViewModel
 import com.example.fooddataviewer.MobiusVM
@@ -15,7 +16,11 @@ fun foodDetailsUpdate(
     event: FoodDetailsEvent
 ): Next<FoodDetailsModel, FoodDetailsEffect>{
     return when(event){
-        else -> next(model.copy(activity = false))
+        is Initial -> next(
+            model.copy(activity = true),
+            setOf(LoadProduct(event.barcode))
+        )
+        is ActionButtonClicked -> TODO()
     }
 }
 
@@ -26,5 +31,10 @@ class FoodDetailsViewModel @Inject constructor(
     Update(::foodDetailsUpdate),
     FoodDetailsModel(),
     RxMobius.subtypeEffectHandler<FoodDetailsEffect, FoodDetailsEvent>()
+        .addTransformer(LoadProduct::class.java){upstream ->
+            upstream.switchMap { effect ->
+                //productRepository.
+            }
+        }   //action handler for Initial
         .build()
 )
