@@ -1,3 +1,7 @@
 package com.example.fooddataviewer.foodlist
 
-object FoodListModel
+import com.example.fooddataviewer.model.Product
+
+data class FoodListModel(
+    val products: List<Product> = listOf()
+)

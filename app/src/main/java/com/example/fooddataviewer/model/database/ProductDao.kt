@@ -6,6 +6,7 @@ import androidx.room.Query
 import com.example.fooddataviewer.dto.ProductDto
 import com.example.fooddataviewer.model.Product
 import io.reactivex.Completable
+import io.reactivex.Observable
 import io.reactivex.Single
 
 // Product Data Access Object
@@ -20,5 +21,8 @@ abstract class ProductDao {
 
     @Query("DELETE FROM productdto WHERE id=:barcode")
     abstract fun delete(barcode: String): Completable
+
+    @Query("SELECT * FROM ProductDto")
+    abstract fun get(): Observable<List<ProductDto>>
 
 }
