@@ -1,4 +1,4 @@
-package com.example.fooddataviewer.ScanTests
+package com.example.fooddataviewer.ScanTests.scan
 
 import com.example.fooddataviewer.model.Product
 import com.example.fooddataviewer.scan.*
