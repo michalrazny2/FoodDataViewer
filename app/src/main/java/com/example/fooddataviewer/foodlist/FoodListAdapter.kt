@@ -10,17 +10,27 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.fooddataviewer.R
 import com.example.fooddataviewer.model.Product
+import com.jakewharton.rxbinding3.view.clicks
+import io.reactivex.Observable
+import io.reactivex.subjects.PublishSubject
 import kotlinx.android.extensions.LayoutContainer
+import kotlinx.android.synthetic.main.food_list_product_item.*
 import kotlinx.android.synthetic.main.product_layout_small.*
 
+
 class FoodListAdapter: ListAdapter<Product,FoodListProductViewHolder>(DiffUtilCallback()) {
+
+    private val productClicksSubject = PublishSubject.create<Int>()
+    val productClicks: Observable<Product> = productClicksSubject
+        .map{ position -> getItem(position)}
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FoodListProductViewHolder {
         return FoodListProductViewHolder(LayoutInflater.from(parent.context).inflate(
             viewType,
             parent,
             false
-        ))
+        ),
+        productClicksSubject)
     }
 
     override fun onBindViewHolder(holder: FoodListProductViewHolder, position: Int) {
@@ -44,7 +54,8 @@ private class DiffUtilCallback: DiffUtil.ItemCallback<Product>(){
 }
 
 class FoodListProductViewHolder(
-    override val containerView: View
+    override val containerView: View,
+    val productClicksSubject: PublishSubject<Int>
 ): RecyclerView.ViewHolder(containerView), LayoutContainer{
 
     fun bind(product: Product){
@@ -73,6 +84,9 @@ class FoodListProductViewHolder(
             .load(product.imageUrl)
             .fitCenter()
             .into(productImageView)
+
+        // checking for clicks on food list item from recyclerview
+        productCard.clicks().map { adapterPosition }.subscribe(productClicksSubject)
     }
 
 }
