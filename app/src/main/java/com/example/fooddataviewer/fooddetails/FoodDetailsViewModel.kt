@@ -25,11 +25,13 @@ fun foodDetailsUpdate(
         )
         is ActionButtonClicked -> if(model.product!=null){
             if(model.product.saved){
-                dispatch<FoodDetailsModel, FoodDetailsEffect>( // todo not quite get why next, why dispatch
+                next<FoodDetailsModel, FoodDetailsEffect>( // todo not quite get why next, why dispatch
+                    model.copy(product = model.product.copy(saved = !model.product.saved)),
                     setOf(DeleteProduct(model.product.id))
                 )
             }else{
-                dispatch<FoodDetailsModel, FoodDetailsEffect>(
+                next<FoodDetailsModel, FoodDetailsEffect>(
+                    model.copy(product = model.product.copy(saved = !model.product.saved)),
                     setOf(SaveProduct(model.product)) //todo to nwm czy napewno
                 )
             }
