@@ -10,7 +10,9 @@ import com.example.fooddataviewer.foodlist.FoodListViewModel
 import com.example.fooddataviewer.model.ProductService
 import com.example.fooddataviewer.model.database.ApplicationDatabase
 import com.example.fooddataviewer.scan.ScanViewModel
+import com.example.fooddataviewer.scan.utils.FrameProcessorOnSubscribe
 import com.example.fooddataviewer.utils.ActivityService
+import com.example.fooddataviewer.utils.IdlingResource
 import com.example.fooddataviewer.utils.Navigator
 import dagger.*
 import dagger.multibindings.IntoMap
@@ -35,14 +37,19 @@ internal annotation class ViewModelKey(val value: KClass<out ViewModel>)
 @Retention(AnnotationRetention.RUNTIME)
 internal annotation class ApiBaseUrl
 
-@Singleton
-@Component(modules = [ApplicationModule::class, ViewModelModule::class, ApiModule::class, DatabaseModule::class])
 interface ApplicationComponent {
 
     fun viewModelFactory(): ViewModelProvider.Factory
 
     fun activityService(): ActivityService
 
+    fun frameProcessorOnSubscribe(): FrameProcessorOnSubscribe
+
+}
+
+@Singleton
+@Component(modules = [ApplicationModule::class, ViewModelModule::class, ApiModule::class, DatabaseModule::class, RealModule::class])
+interface RealComponent : ApplicationComponent{
     @Component.Builder
     interface Builder {
 
@@ -81,6 +88,7 @@ object ApplicationModule {
     @JvmStatic
     fun apiBaseUrl(context: Context): String = context.getString(R.string.api_base_url)
 }
+
 
 @Module
 abstract class ViewModelModule {
@@ -143,6 +151,23 @@ object DatabaseModule{
     fun applicationDatabase(context: Context): ApplicationDatabase {
         return Room.databaseBuilder(context, ApplicationDatabase::class.java, "application")
             .build()
+    }
+
+}
+
+@Module
+object RealModule{
+    @Provides
+    @Singleton
+    @JvmStatic
+    fun frameProcessorOnSubscribe(): FrameProcessorOnSubscribe = FrameProcessorOnSubscribe()
+
+    @Provides
+    @Singleton
+    @JvmStatic
+    fun idlingResource(): IdlingResource = object: IdlingResource {
+        override fun increment(){}
+        override fun decrement(){}
     }
 
     @Provides

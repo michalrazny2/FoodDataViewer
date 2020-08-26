@@ -34,6 +34,35 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:947340838009:android:6e2ba984c06a680538c0a8",
+        "android_client_info": {
+          "package_name": "com.example.fooddataviewer.instrumented"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "947340838009-7fejniap47p7tqddak0da7c18ug0ath7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBzikB5epLB_pvddtkspRnfhGS-qF49wck"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "947340838009-7fejniap47p7tqddak0da7c18ug0ath7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"
