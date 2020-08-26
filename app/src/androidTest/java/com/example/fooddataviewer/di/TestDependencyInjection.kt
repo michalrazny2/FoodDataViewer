@@ -5,6 +5,7 @@ import com.example.fooddataviewer.model.database.ProductDao
 import com.example.fooddataviewer.scan.TestFrameProcessorOnSubscribe
 import com.example.fooddataviewer.scan.utils.FrameProcessorOnSubscribe
 import com.example.fooddataviewer.utils.IdlingResource
+import com.example.fooddataviewer.utils.TestIdlingResource
 import dagger.BindsInstance
 import dagger.Component
 import dagger.Module
