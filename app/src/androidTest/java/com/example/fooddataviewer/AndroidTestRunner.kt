@@ -1,6 +1,7 @@
 package com.example.fooddataviewer
 
 import android.app.Application
+import android.app.Instrumentation
 import android.content.Context
 import androidx.test.runner.AndroidJUnitRunner
 
@@ -13,6 +14,6 @@ class AndroidTestRunner: AndroidJUnitRunner() {
         className: String?,
         context: Context?
     ): Application {
-        return super.newApplication(cl, className, context)
+        return Instrumentation.newApplication(AndroidTestApplication::class.java, context)
     }
 }
