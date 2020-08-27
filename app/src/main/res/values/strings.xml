@@ -28,4 +28,13 @@
     <string name="contentdesc">contentDesc</string>
     <string name="taste_the_rainbow_with_skittles">Taste the rainbow with Skittles</string>
 
+    <string name="food_list_save">save</string>
+    <string name="food_list_delete">Delete</string>
+    <string name="food_list_carbs">Carbs:</string>
+    <string name="food_list_protein">Protein:</string>
+    <string name="food_list_fat">Fat:</string>
+    <string name="food_list_energy">Energy:</string>
+    <string name="food_list_energy_value">%1$d kcal</string>
+    <string name="food_list_macro_value">%1$.1fg</string>
+    <string name="food_list_ingridients">Ingridients: %1$s</string>
 </resources>
