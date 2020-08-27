@@ -6,6 +6,7 @@ import androidx.room.Delete
 import com.example.fooddataviewer.BaseViewModel
 import com.example.fooddataviewer.MobiusVM
 import com.example.fooddataviewer.model.ProductRepository
+import com.example.fooddataviewer.utils.IdlingResource
 import com.spotify.mobius.Next
 import com.spotify.mobius.Next.*
 import com.spotify.mobius.Update
@@ -44,7 +45,8 @@ fun foodDetailsUpdate(
 }
 
 class FoodDetailsViewModel @Inject constructor(
-    productRepository: ProductRepository
+    productRepository: ProductRepository,
+    idlingResource: IdlingResource
 ): MobiusVM<FoodDetailsModel,FoodDetailsEvent,FoodDetailsEffect> (
     "FoodDetailsViewModel",
     Update(::foodDetailsUpdate),
@@ -56,7 +58,9 @@ class FoodDetailsViewModel @Inject constructor(
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .toObservable()
-                    .map { product -> ProductLoaded(product) as FoodDetailsEvent }
+                    .map { product ->
+                        idlingResource.decrement()
+                        ProductLoaded(product) as FoodDetailsEvent }
                     .onErrorReturn { ErrorLoadingProduct }
             }   //action handler for Initial
         }

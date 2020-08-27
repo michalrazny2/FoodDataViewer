@@ -16,7 +16,7 @@ fun getFrame(context: Context, assetLocation: String): Frame {
     val byteArray = getNV21(width, height, bitmap)
     bitmap.recycle()
 
-    return Frame(size = Resolution(width, height), image= byteArray, rotation=270)
+    return Frame(size = Resolution(width, height), image= byteArray!!, rotation=270)
 
 }
 
