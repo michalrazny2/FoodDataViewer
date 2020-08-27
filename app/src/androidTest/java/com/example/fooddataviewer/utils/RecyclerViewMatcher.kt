@@ -2,6 +2,7 @@ package com.example.fooddataviewer.utils
 
 import android.content.res.Resources
 import android.view.View
+import androidx.recyclerview.widget.RecyclerView
 import org.hamcrest.Matcher
 import org.hamcrest.TypeSafeMatcher
 import org.junit.runner.Description

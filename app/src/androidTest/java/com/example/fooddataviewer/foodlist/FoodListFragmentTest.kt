@@ -82,7 +82,7 @@ class FoodListFragmentTest {
             )
         val otherName = "name2"
         scenario.onFragment { fragment ->
-            (fragment.activity!!.applicationContext as AndroidTestApplication).productDtosSubject.onNext(
+            (fragment.activity!!.applicationContext as AndroidTestApplication).productDtoSubject.onNext(
                 listOf(
                     productDto,
                     productDto.copy(product_name = otherName)
@@ -91,7 +91,6 @@ class FoodListFragmentTest {
         }
         onView(withRecyclerView(R.id.recycler_view).atPositionOnView(1, R.id.productNameView))
             .check(matches(withText(otherName)))
-    }
     }
 
 }
